@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -8,10 +9,43 @@ import chess.ChessException;
 import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.ScrollPane;
+import javafx.stage.Stage;
 
-public class Program {
+public class Program extends javafx.application.Application {
+
+    private static Scene mainScene;
+
+    public static Scene getMainScene(){
+        return mainScene;
+    }
+
     public static void main(String[] args) throws Exception {
-        
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage){
+        try{
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/MainView.fxml"));
+            ScrollPane scrollPane = loader.load();
+
+            //MainViewController controller = loader.getController();
+
+            mainScene = new Scene(scrollPane);
+
+            stage.setScene(mainScene);
+            stage.setTitle("Java Chess");
+            stage.show();
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void playChess(){
         Scanner sc = new Scanner(System.in);
         ChessMatch chessMatch = new ChessMatch();
         List<ChessPiece> capturedPieces = new ArrayList<>();

@@ -1,0 +1,12 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Program",
+            "request": "launch",
+            "mainClass": "application.Program",
+            "projectName": "java-chess_faf6ecc4",
+            "vmArgs": "--module-path 'C:\\Program Files\\Java\\java-libs\\javafx-sdk-19\\lib' --add-modules=javafx.fxml,javafx.controls"
+        }
+    ]
+}
