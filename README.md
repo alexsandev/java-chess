@@ -1,18 +1,4 @@
-## Getting Started
+# Resumo
+O projeto se trata de um jogo de Xadrez virtual, jogável atráves do console / terminal, foi desenvolvido puramente em Java utilizando o padrão em camadas. O mesmo faz parte do curso "Java Completo - Nelio Alves" da Udemy, onde a proposta era revisar e desenvolver os principais conceitos da programação orientada a objetos.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
-
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+![image](https://github.com/alexsandev/chess-system-java/assets/109860864/34c6e796-86da-41bf-ae59-95cd6e7b93df)
