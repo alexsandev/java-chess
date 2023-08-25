@@ -1,4 +1,4 @@
-package boardgame;
+package model.boardgame;
 
 public class Board {
     private int rows;

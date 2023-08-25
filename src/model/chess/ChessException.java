@@ -1,6 +1,6 @@
-package chess;
+package model.chess;
 
-import boardgame.BoardException;
+import model.boardgame.BoardException;
 
 public class ChessException extends BoardException{
     

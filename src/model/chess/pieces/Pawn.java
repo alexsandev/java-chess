@@ -1,10 +1,10 @@
-package chess.pieces;
+package model.chess.pieces;
 
-import boardgame.Board;
-import boardgame.Position;
-import chess.ChessMatch;
-import chess.ChessPiece;
-import chess.Color;
+import model.boardgame.Board;
+import model.boardgame.Position;
+import model.chess.ChessMatch;
+import model.chess.ChessPiece;
+import model.chess.Color;
 
 public class Pawn extends ChessPiece{
 

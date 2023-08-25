@@ -1,18 +1,18 @@
-package chess;
+package model.chess;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import boardgame.Board;
-import boardgame.Piece;
-import boardgame.Position;
-import chess.pieces.Bishop;
-import chess.pieces.King;
-import chess.pieces.Knight;
-import chess.pieces.Pawn;
-import chess.pieces.Queen;
-import chess.pieces.Rook;
+import model.boardgame.Board;
+import model.boardgame.Piece;
+import model.boardgame.Position;
+import model.chess.pieces.Bishop;
+import model.chess.pieces.King;
+import model.chess.pieces.Knight;
+import model.chess.pieces.Pawn;
+import model.chess.pieces.Queen;
+import model.chess.pieces.Rook;
 
 public class ChessMatch {
 

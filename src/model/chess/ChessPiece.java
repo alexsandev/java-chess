@@ -1,8 +1,8 @@
-package chess;
+package model.chess;
 
-import boardgame.Board;
-import boardgame.Piece;
-import boardgame.Position;
+import model.boardgame.Board;
+import model.boardgame.Piece;
+import model.boardgame.Position;
 
 public abstract class ChessPiece extends Piece {
 

@@ -1,6 +1,6 @@
-package chess;
+package model.chess;
 
-import boardgame.Position;
+import model.boardgame.Position;
 
 public class ChessPosition {
     private char column;
