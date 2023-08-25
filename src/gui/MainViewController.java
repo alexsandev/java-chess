@@ -1,32 +1,103 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import chess.ChessException;
 import chess.ChessMatch;
 import chess.ChessPiece;
 import chess.ChessPosition;
+import chess.pieces.Pawn;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class MainViewController implements Initializable {
     
+    ChessMatch chessMatch = new ChessMatch();
+
+    List<ChessPiece> capturedPieces = new ArrayList<>();
+
+    ChessPosition source, target;
+
     @FXML
     ImageView imageView;
 
     @FXML
     GridPane gridPane;
+
+    @FXML
+    GridPane gridPaneBlack;
+
+    @FXML
+    GridPane gridPaneWhite;
+
+    @FXML
+    Label alert;
+
+    @FXML
+    Label turn;
+
+    @FXML
+    Label currentPlayer;
     
+    @FXML
+    public void onAction(Event event){
+        try{
+            char column = ((Button)event.getSource()).getId().charAt(0);
+            int row = Integer.parseInt(((Button)event.getSource()).getId().substring(1));
+            
+            if(source == null){
+                clearScreen();
+                source = new ChessPosition(column, row);
+                boolean[][] possibleMoves = chessMatch.possibleMoves(source);
+                printBoard(chessMatch.getPieces(), possibleMoves);
+            }else{
+                target = new ChessPosition(column, row);
+                ChessPiece capturedPiece = chessMatch.performChessMove(source, target);
+
+                if(capturedPiece != null){
+                    capturedPieces.add(capturedPiece);
+                }
+
+                if(chessMatch.getPromoted() != null){
+                    createDialogForm(currentStage((ActionEvent)event));
+                    //String type = null;
+                    //chessMatch.replacePromotedPiece(type);
+                }
+                
+                printMatch(chessMatch, capturedPieces);
+                source = null;
+            }
+        }catch(ChessException e){
+                clearScreen();
+                alert.setTextFill(Color.RED);
+                alert.setText(e.getMessage());
+                source = null;
+        }   
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Image img = new Image("\\img\\board.png");
         imageView.setImage(img);
-        ChessMatch chessMatch = new ChessMatch();
-        printBoard(chessMatch.getPieces(), chessMatch.possibleMoves(new ChessPosition('a', 2)));
+        printMatch(chessMatch, capturedPieces);
     }
 
     private Button[][] getButtons(){
@@ -61,70 +132,101 @@ public class MainViewController implements Initializable {
 
     public void printPiece(ChessPiece piece, boolean background, Button button){
         if(background){
-            button.setStyle("-fx-background-color: DeepSkyBlue; -fx-opacity: 0.5");;
-        }
-        if(piece == null){
-            button.setText("vazio");
+            button.setStyle("-fx-background-color: DeepSkyBlue; -fx-opacity: 0.5");
         }else{
+            button.setStyle("-fx-background-color: transparent; -fx-opacity: 0.5");
+        }
+        if(piece != null){
             if(piece.getColor() == chess.Color.BLACK){
-                button.styleProperty().setValue("-fx-backgroud-image: url(\"\"); -fx-opacity: 0.5");
-                button.setText(piece.toString());
+                if(piece.toString() == "P"){
+                    button.setStyle("-fx-background-position: center; -fx-background-color: transparent; -fx-background-image: url(\"file:///D:/OneDrive/Documentos/Java/java-chess/src/img/black_pawn.png\"); -fx-background-size: 50px 50px; -fx-background-repeat: no-repeat;");
+                }
+                if(piece.toString() == "R"){
+                    button.setStyle("-fx-background-position: center; -fx-background-color: transparent; -fx-background-image: url(\"file:///D:/OneDrive/Documentos/Java/java-chess/src/img/black_rock.png\"); -fx-background-size: 50px 50px; -fx-background-repeat: no-repeat;");
+                }
+                if(piece.toString() == "B"){
+                    button.setStyle("-fx-background-position: center; -fx-background-color: transparent; -fx-background-image: url(\"file:///D:/OneDrive/Documentos/Java/java-chess/src/img/black_bishop.png\"); -fx-background-size: 50px 50px; -fx-background-repeat: no-repeat;");
+                }
+                if(piece.toString() == "K"){
+                    button.setStyle("-fx-background-position: center; -fx-background-color: transparent; -fx-background-image: url(\"file:///D:/OneDrive/Documentos/Java/java-chess/src/img/black_king.png\"); -fx-background-size: 50px 50px; -fx-background-repeat: no-repeat;");
+                }
+                if(piece.toString() == "N"){
+                    button.setStyle("-fx-background-position: center; -fx-background-color: transparent; -fx-background-image: url(\"file:///D:/OneDrive/Documentos/Java/java-chess/src/img/black_knight.png\"); -fx-background-size: 50px 50px; -fx-background-repeat: no-repeat;");
+                }
+                if(piece.toString() == "Q"){
+                    button.setStyle("-fx-background-position: center; -fx-background-color: transparent; -fx-background-image: url(\"file:///D:/OneDrive/Documentos/Java/java-chess/src/img/black_queen.png\"); -fx-background-size: 50px 50px; -fx-background-repeat: no-repeat;");
+                }
             }else{
-                
-                button.setStyle("-fx-backgroud-image: url(\"\"); -fx-opacity: 0.5");
-                button.setText(piece.toString());
+                if(piece instanceof Pawn){
+                    button.setStyle("-fx-background-position: center; -fx-background-color: transparent; -fx-background-image: url(\"file:///D:/OneDrive/Documentos/Java/java-chess/src/img/pawn.png\"); -fx-background-size: 50px 50px; -fx-background-repeat: no-repeat;");
+                }
+                if(piece.toString() == "R"){
+                    button.setStyle("-fx-background-position: center; -fx-background-color: transparent; -fx-background-image: url(\"file:///D:/OneDrive/Documentos/Java/java-chess/src/img/rock.png\"); -fx-background-size: 50px 50px; -fx-background-repeat: no-repeat;");
+                }
+                if(piece.toString() == "B"){
+                    button.setStyle("-fx-background-position: center; -fx-background-color: transparent; -fx-background-image: url(\"file:///D:/OneDrive/Documentos/Java/java-chess/src/img/bishop.png\"); -fx-background-size: 50px 50px; -fx-background-repeat: no-repeat;");
+                }
+                if(piece.toString() == "K"){
+                    button.setStyle("-fx-background-position: center; -fx-background-color: transparent; -fx-background-image: url(\"file:///D:/OneDrive/Documentos/Java/java-chess/src/img/king.png\"); -fx-background-size: 50px 50px; -fx-background-repeat: no-repeat;");
+                }
+                if(piece.toString() == "N"){
+                    button.setStyle("-fx-background-position: center; -fx-background-color: transparent; -fx-background-image: url(\"file:///D:/OneDrive/Documentos/Java/java-chess/src/img/knight.png\"); -fx-background-size: 50px 50px; -fx-background-repeat: no-repeat;");
+                }
+                if(piece.toString() == "Q"){
+                    button.setStyle("-fx-background-position: center; -fx-background-color: transparent; -fx-background-image: url(\"file:///D:/OneDrive/Documentos/Java/java-chess/src/img/queen.png\"); -fx-background-size: 50px 50px; -fx-background-repeat: no-repeat;");
+                }
             }   
         }
     }
 
-    /*
-    public static void clearScreen(){
-        System.out.println("\033[H\033[2J");
-        System.out.flush();
-    }
-
-    public static ChessPosition readChessPosition(Scanner sc){
-        try{
-            String s = sc.nextLine();
-            char column = s.charAt(0);
-            int row = Integer.parseInt(s.substring(1));
-            return new ChessPosition(column, row);
-        }
-        catch (RuntimeException e){
-            throw new InputMismatchException("Error reading ChessPosition. Valid values are from a1 to h8.");
-        }
-    }
-
-    public static void printMatch(ChessMatch chessMatch, List<ChessPiece> capturedPieces){
+    public void clearScreen(){
+        alert.setText(null);
         printBoard(chessMatch.getPieces());
-        System.out.println();
+    }
+
+
+    public void printMatch(ChessMatch chessMatch, List<ChessPiece> capturedPieces){
+        printBoard(chessMatch.getPieces());
         printCapturedPieces(capturedPieces);
-        System.out.println();
-        System.out.println("Turn: " + chessMatch.getTurn());
+        turn.setText(chessMatch.getTurn()+"");
+         
         if(!chessMatch.getCheckMate()){
-            System.out.println("Waiting player: " + chessMatch.getCurrentPlayer());
+            currentPlayer.setText(chessMatch.getCurrentPlayer()+"");
             if(chessMatch.getCheck()){
-                System.out.println("CHECK!");
+                alert.setText("CHECK!");
             }
         }else{
-            System.out.println("CHECKMATE!");
-            System.out.println("Winner: " + chessMatch.getCurrentPlayer());
+            alert.setTextFill(Color.GREEN);
+            alert.setText("CHECKMATE! Winner: " + chessMatch.getCurrentPlayer());
         }    
     }
-
-    public static void printCapturedPieces(List<ChessPiece> printCapturedPieces){
-        System.out.println();
-        List<ChessPiece> white = printCapturedPieces.stream().filter(x -> x.getColor() == Color.WHITE).collect(Collectors.toList());
-        List<ChessPiece> black = printCapturedPieces.stream().filter(x -> x.getColor() == Color.BLACK).collect(Collectors.toList());
-        System.out.println("Captured pieces:");
-        System.out.print("White: ");
-        System.out.print(ANSI_WHITE);
-        System.out.println(Arrays.toString(white.toArray()));
-        System.out.print(ANSI_RESET);
-        System.out.print("Black: ");
-        System.out.print(ANSI_YELLOW);
-        System.out.println(Arrays.toString(black.toArray()));
-        System.out.print(ANSI_RESET);
+    
+    public void printCapturedPieces(List<ChessPiece> capturedPieces){
+        System.out.println("peças capturadas.");
     }
-    */
+
+    private void createDialogForm(Stage parentStage) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/gui/PromotedFormView.fxml"));
+            Pane pane = loader.load();
+
+            PromotedFormController controller = loader.getController();
+            controller.setColorToPromoted(chessMatch.getCurrentPlayer());
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Which piece do you want to promote?");
+            dialogStage.setScene(new Scene(pane));
+            dialogStage.setResizable(false);
+            dialogStage.initOwner(parentStage);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+           alert.setText(e.getMessage());
+        }
+    }
+
+    public Stage currentStage(ActionEvent event) {
+        return (Stage)((Node) event.getSource()).getScene().getWindow();
+    }
 }

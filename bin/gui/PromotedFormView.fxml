@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.PromotedFormController">
+   <children>
+    <Button fx:id="btnBishop" layoutX="350.0" layoutY="50.0" mnemonicParsing="false" onAction="#onAction" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: transparent; -fx-border-color: black;" />
+    <Button fx:id="btnKnight" layoutX="250.0" layoutY="50.0" mnemonicParsing="false" onAction="#onAction" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: transparent; -fx-border-color: black;" />
+    <Button fx:id="btnRock" layoutX="150.0" layoutY="50.0" mnemonicParsing="false" onAction="#onAction" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: transparent; -fx-border-color: black;" /> 
+    <Button fx:id="btnQueen" layoutX="50.0" layoutY="50.0" mnemonicParsing="false" onAction="#onAction" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: transparent; -fx-border-color: black;" />
+   </children>
+</AnchorPane>
