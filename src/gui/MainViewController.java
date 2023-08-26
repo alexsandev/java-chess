@@ -58,6 +58,7 @@ public class MainViewController implements Initializable {
     public void onMenuItemNewGameAction(){
         chessMatch = new ChessMatch();
         capturedPieces = new ArrayList<>();
+        source = null;
         printMatch(chessMatch, capturedPieces);
         alert.setTextFill(Color.BLACK);
         alert.setText("CLIQUE EM UMA PEÇA PARA COMEÇAR!");
@@ -175,7 +176,7 @@ public class MainViewController implements Initializable {
             }
         }else{
             alert.setTextFill(Color.GREEN);
-            alert.setText("CHECKMATE! VENCEDOR: " + chessMatch.getCurrentPlayer());
+            alert.setText("CHECKMATE! " + chessMatch.getCurrentPlayer() + " É O VENCEDOR.");
         }    
     }
     
@@ -193,7 +194,7 @@ public class MainViewController implements Initializable {
             controller.setChessMatch(chessMatch);
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Qual peça deseja promover?");
+            dialogStage.setTitle("QUAL PEÇA DESEJA PROMOVER?");
             dialogStage.setScene(new Scene(pane));
             dialogStage.setResizable(false);
             dialogStage.initOwner(parentStage);

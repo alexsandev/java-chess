@@ -23,3 +23,9 @@
 hs_err_pid*
 
 /bin
+
+/bin/*
+
+/lib
+
+/lib/*

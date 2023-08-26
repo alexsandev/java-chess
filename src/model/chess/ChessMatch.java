@@ -85,7 +85,7 @@ public class ChessMatch {
 
         if(testCheck(currentPlayer)){
             undoMove(source, target, capturedPiece);
-            throw new ChessException("You can't put yourself in check.");
+            throw new ChessException("Você não pode se colocar em xeque");
         }
 
         ChessPiece movedPiece = (ChessPiece)board.piece(target);
@@ -118,7 +118,7 @@ public class ChessMatch {
 
     public ChessPiece replacePromotedPiece(String type){
         if(promoted == null){
-            throw new IllegalStateException("there is no piece to be promoted");
+            throw new IllegalStateException("Não há nenhuma peça a ser promovida");
         }
         if(!type.equals("Q") && !type.equals("B") && !type.equals("N") && !type.equals("R")){
             return promoted;
@@ -235,19 +235,19 @@ public class ChessMatch {
 
     private void validateSourcePosition(Position position){
         if(!board.thereIsAPiece(position)){
-            throw new ChessException("There is not piece on source position");
+            throw new ChessException("Não há peça na posição de origem");
         }
         if(currentPlayer != ((ChessPiece)board.piece(position)).getColor()){
-            throw new ChessException("The chosen piece is not yours");
+            throw new ChessException("A peça escolhida não é sua");
         }
         if(!board.piece(position).isThereAnyPossibleMove()){
-            throw new ChessException("There is no possible moves for the chosen piece");
+            throw new ChessException("Não há movimentos possiveis para pela escolhida");
         }
     }
 
     private void validateTargetPosition(Position source, Position target){
         if(!board.piece(source).possibleMove(target)){
-            throw new ChessException("The chosen piece can't move to target position");
+            throw new ChessException("A peça escolhida não pode se mover para posição alvo");
         }
     }
 

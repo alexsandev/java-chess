@@ -1,4 +1,18 @@
-# Resumo
-O projeto se trata de um jogo de Xadrez virtual, jogável atráves do console / terminal, foi desenvolvido puramente em Java utilizando o padrão em camadas. O mesmo faz parte do curso "Java Completo - Nelio Alves" da Udemy, onde a proposta era revisar e desenvolver os principais conceitos da programação orientada a objetos.
+# Java Chess
 
-![image](https://github.com/alexsandev/chess-system-java/assets/109860864/34c6e796-86da-41bf-ae59-95cd6e7b93df)
+A aplicação tem como proposta um jogo de xadrez virtual, atualmente offline e para dois jogadores. Pretendo continuar atualizando, incluindo telas dinamicas, motor para partidas solo e versão web.
+
+## Sobre
+
+Criado em Java, teve inicio como um dos projetos do curso "Java Completo - Nelio Alves" da Udemy, onde as regras foram implementadas e ao final a partida era realizada atráves do prompt. Tive a ideia de fazer um upgrade adicionando interface gráfica com a plataforma JavaFX, podendo assim exercitar e ganhar pratica com as tecnologias.
+
+## Demonstração
+<style>
+    .img_telas{
+        max-width: 500px;
+        max-height: 500px;
+    }
+</style>
+
+<img class="img_telas" src="src/gui/images/readme/demo.gif" alt="tabuleiro com as posições iniciais do xadrez e mensagem indicando que o usuario clique para começar">
+
