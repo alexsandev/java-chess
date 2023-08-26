@@ -1,6 +1,7 @@
 package gui;
 
 import java.io.IOException;
+import java.net.URI;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -28,20 +30,14 @@ import model.chess.ChessPosition;
 
 public class MainViewController implements Initializable {
     
-    ChessMatch chessMatch = new ChessMatch();
+    ChessMatch chessMatch;
 
-    List<ChessPiece> capturedPieces = new ArrayList<>();
+    List<ChessPiece> capturedPieces;
 
     ChessPosition source, target;
 
     @FXML
     GridPane gridPane;
-
-    @FXML
-    GridPane gridPaneBlack;
-
-    @FXML
-    GridPane gridPaneWhite;
 
     @FXML
     Label alert;
@@ -51,6 +47,32 @@ public class MainViewController implements Initializable {
 
     @FXML
     Label currentPlayer;
+
+    @FXML
+    MenuItem newGame;
+
+    @FXML
+    MenuItem about;
+
+    @FXML
+    public void onMenuItemNewGameAction(){
+        chessMatch = new ChessMatch();
+        capturedPieces = new ArrayList<>();
+        printMatch(chessMatch, capturedPieces);
+        alert.setTextFill(Color.BLACK);
+        alert.setText("CLIQUE EM UMA PEÇA PARA COMEÇAR!");
+    }
+
+    @FXML
+    public void onMenuItemAboutAction(){
+        try{
+            URI link = new URI("https://alexsandev.github.io/java-chess/");
+            java.awt.Desktop.getDesktop().browse(link);
+        }catch(Exception erro){
+            alert.setTextFill(Color.RED);
+            alert.setText("NÃO FOI POSSIVEL ABRIR A PAGINA, TENTE NOVAMENTE...");
+        }
+    }
     
     @FXML
     public void onAction(Event event){
@@ -90,6 +112,8 @@ public class MainViewController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        chessMatch = new ChessMatch();
+        capturedPieces = new ArrayList<>();
         printMatch(chessMatch, capturedPieces);
     }
 
@@ -151,7 +175,7 @@ public class MainViewController implements Initializable {
             }
         }else{
             alert.setTextFill(Color.GREEN);
-            alert.setText("CHECKMATE! Winner: " + chessMatch.getCurrentPlayer());
+            alert.setText("CHECKMATE! VENCEDOR: " + chessMatch.getCurrentPlayer());
         }    
     }
     
@@ -169,7 +193,7 @@ public class MainViewController implements Initializable {
             controller.setChessMatch(chessMatch);
 
             Stage dialogStage = new Stage();
-            dialogStage.setTitle("Which piece do you want to promote?");
+            dialogStage.setTitle("Qual peça deseja promover?");
             dialogStage.setScene(new Scene(pane));
             dialogStage.setResizable(false);
             dialogStage.initOwner(parentStage);
